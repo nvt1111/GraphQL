@@ -1,21 +1,24 @@
 import React, { Fragment } from 'react'
-import { getSingleBook } from '../graphql-client/queries';
+import Card from 'react-bootstrap/Card'
+import { getSingleBook } from '../graphql-client/queries'
 import { useQuery } from '@apollo/client'
 
-function BookDetails({ bookId }) {
-    // gui req toi BE 
+const BookDetails = ({ bookId }) => {
     const { loading, error, data } = useQuery(getSingleBook, {
         variables: {
             id: bookId
         },
         skip: bookId === null
-    });
-    if (loading) { return <p>Loading book details...</p> }
+    })
+
+    if (loading) return <p>Loading book details...</p>
     if (error) {
-        console.log(error.message);
-        return <p>Error loading book detail</p>
+        console.log(error.message)
+        return <p>Error loading book details!</p>
     }
+
     const book = bookId !== null ? data.book : null
+
     return (
         <Card bg='info' text='white' className='shadow'>
             <Card.Body>
@@ -23,7 +26,6 @@ function BookDetails({ bookId }) {
                     <Card.Text>Please select a book</Card.Text>
                 ) : (
                     <Fragment>
-                        {/* div giả nhom va tra ve nhieu thnah phan */}
                         <Card.Title>{book.name}</Card.Title>
                         <Card.Subtitle>{book.genre}</Card.Subtitle>
                         <p>{book.author.name}</p>
@@ -40,7 +42,5 @@ function BookDetails({ bookId }) {
         </Card>
     )
 }
-
-
 
 export default BookDetails

@@ -1,4 +1,3 @@
-// Sườn CSDL
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
@@ -10,21 +9,20 @@ const typeDefs = gql`
 	}
 
 	type Author {
-		id: ID! 
+		id: ID!
 		name: String
 		age: Int
 		books: [Book]
 	}
 
-	# ROOT TYPE (Loại Gốc)
-	type Query { # Read data in csdl
-		books: [Book] # ds những book
+	# ROOT TYPE
+	type Query {
+		books: [Book]
 		book(id: ID!): Book
 		authors: [Author]
 		author(id: ID!): Author
 	}
 
-    # Ghi data vao csdl
 	type Mutation {
 		createAuthor(name: String, age: Int): Author
 		createBook(name: String, genre: String, authorId: ID!): Book

@@ -1,5 +1,5 @@
 // resolver return data for query
-const mongoDataMethods = require('../data/db')
+const { mongoDataMethods } = require('../data/db')
 
 const resolvers = {
     // QUERY
@@ -18,14 +18,14 @@ const resolvers = {
     // parent: ket qua cua query cha
     // voi moi book ta co:
     Book: {
-        author: async ({ authorId }, { mongoDataMethods }) => {
-            await mongoDataMethods.getAuthorById(authorId)
+        author: async ({ authorId }, args, { mongoDataMethods }) => { // co { phair return
+            return await mongoDataMethods.getAuthorById(authorId)
         }
     },
 
     Author: {
-        books: async ({ id }, { mongoDataMethods }) => {
-            await mongoDataMethods.getAllBooks({ authorId: id })
+        books: async ({ id }, args, { mongoDataMethods }) => {
+            return await mongoDataMethods.getAllBooks({ authorId: id })
         }
     },
 
@@ -33,7 +33,7 @@ const resolvers = {
     Mutation: {
         createAuthor: async (parent, args, { mongoDataMethods }) =>
             await mongoDataMethods.createAuthor(args),
-        createBook: async (parent, args) =>
+        createBook: async (parent, args, { mongoDataMethods }) =>
             await mongoDataMethods.createBook(args)
     }
 }
